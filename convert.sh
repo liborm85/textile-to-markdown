@@ -48,6 +48,9 @@ do
 
   # POST TRANSFORMATIONS
 
+  # MediaWiki link transformation
+  replace_code_regex 's/\\\[\\\[(.*)\\\|(.*)\\\]\\\]/[\2](\1)/g' $pagename 'md'
+
   # remove empty comments (end of list)
   replace_code_regex 's/<!-- -->//g' $pagename 'md'
 
