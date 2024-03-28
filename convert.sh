@@ -35,11 +35,18 @@ do
 
   cp $filename tmp/$pagename-0.textile
 
+  # PRE TRANSFORMATIONS
+
+  # Remove "{{fnlist}}" text (returns Redmine REST API)
+  replace_code_regex 's/\{\{fnlist\}\}//g' $pagename 'textile'
+
   lastStepNumber=$stepsCounter
   stepsCounter=$((stepsCounter+1))
 
   # transformation from textile to markdown using Pandoc
   pandoc tmp/$pagename-$lastStepNumber.textile -o tmp/$pagename-$stepsCounter.md --from textile --to gfm --wrap=none
+
+  # POST TRANSFORMATIONS
 
   # final markdown output
   cp tmp/$pagename-$stepsCounter.md output/$pagename.md
