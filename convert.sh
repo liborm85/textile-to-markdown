@@ -48,6 +48,12 @@ do
 
   # POST TRANSFORMATIONS
 
+  # remove empty comments (end of list)
+  replace_code_regex 's/<!-- -->//g' $pagename 'md'
+
+  # remove multiple new lines
+  replace_code '/^$/N;/^\n$/D' $pagename 'md'
+
   # final markdown output
   cp tmp/$pagename-$stepsCounter.md output/$pagename.md
 done
