@@ -40,6 +40,9 @@ do
   # Remove "{{fnlist}}" text (returns Redmine REST API)
   replace_code_regex 's/\{\{fnlist\}\}//g' $pagename 'textile'
 
+  # Command <?php breaks pandoc transformation - escape it
+  replace_code_regex 's/<\?php/<\\?php/g' $pagename 'textile'
+
   lastStepNumber=$stepsCounter
   stepsCounter=$((stepsCounter+1))
 
@@ -47,6 +50,12 @@ do
   pandoc tmp/$pagename-$lastStepNumber.textile -o tmp/$pagename-$stepsCounter.md --from textile --to gfm --wrap=none
 
   # POST TRANSFORMATIONS
+
+  # Command <?php breaks pandoc transformation - unescape it
+  replace_code_regex 's/\\<\\\\php/<\?php/g' $pagename 'md'
+
+  # Command <?php breaks pandoc transformation - unescape it in code statements
+  replace_code_regex 's/<\\\?php/<\?php/g' $pagename 'md'
 
   # MediaWiki link transformation
   replace_code_regex 's/\\\[\\\[(.*)\\\|(.*)\\\]\\\]/[\2](\1)/g' $pagename 'md'
