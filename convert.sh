@@ -43,6 +43,12 @@ do
   # Command <?php breaks pandoc transformation - escape it
   replace_code_regex 's/<\?php/<\\?php/g' $pagename 'textile'
 
+  # italic and open bracket "_(" breaks pandoc transformation - escape it
+  replace_code_regex 's/\_\(/\_\\\\(/g' $pagename 'textile'
+
+  # italic and close bracket ")_" breaks pandoc transformation - escape it
+  replace_code_regex 's/\)\_/\\\\)\_/g' $pagename 'textile'
+
   lastStepNumber=$stepsCounter
   stepsCounter=$((stepsCounter+1))
 
@@ -56,6 +62,12 @@ do
 
   # Command <?php breaks pandoc transformation - unescape it in code statements
   replace_code_regex 's/<\\\?php/<\?php/g' $pagename 'md'
+
+  # italic and open bracket "_(" breaks pandoc transformation - unescape it
+  replace_code_regex 's/\*\\\\\(/\*\(/g' $pagename 'md'
+
+  # italic and close bracket ")_" breaks pandoc transformation - unescape it
+  replace_code_regex 's/\\\\\)\*/\)\*/g' $pagename 'md'
 
   # MediaWiki link transformation
   replace_code_regex 's/\\\[\\\[(.*)\\\|(.*)\\\]\\\]/[\2](\1)/g' $pagename 'md'
