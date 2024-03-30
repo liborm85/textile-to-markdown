@@ -53,7 +53,7 @@ do
   stepsCounter=$((stepsCounter+1))
 
   # transformation from textile to markdown using Pandoc
-  pandoc tmp/$pagename-$lastStepNumber.textile -o tmp/$pagename-$stepsCounter.md --from textile --to gfm --wrap=none
+  pandoc tmp/$pagename-$lastStepNumber.textile -o tmp/$pagename-$stepsCounter.md --from textile --to gfm+smart --wrap=none
 
   # POST TRANSFORMATIONS
 
